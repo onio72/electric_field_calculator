@@ -688,9 +688,9 @@ el.addEventListener('input', () => {
                 if (existingCharge) existingCharge.remove();
 
                 // Get polarity from the dropdown to determine color and symbol
-                const polarity = document.getElementById(`${chargeId}Polarity`).value;
-                const color = polarity === 'positive' ? '#DC2626' : '#2563EB';
-                const symbol = polarity === 'positive' ? '+' : '-';
+                const chargePolarity = document.getElementById(`${chargeId}Polarity`).value;
+                const color = chargePolarity === 'positive' ? '#DC2626' : '#2563EB';
+                const symbol = chargePolarity === 'positive' ? '' : '-';
 
                 const chargeGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
                 chargeGroup.id = `charge-${chargeId}`;
