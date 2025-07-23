@@ -869,25 +869,22 @@ el.addEventListener('input', () => {
             }
 
            getChargeValue(chargeId) {
-                const valueAbs = Math.abs(parseFloat(document.getElementById(`${chargeId}Value`).value) || 0);
-                const pol = document.getElementById(`${chargeId}Polarity`).value;
-                 const units = document.getElementById(`${chargeId}Units`).value;
-                 
-                 let multiplier = 1;
-                 switch (units) {
-                     case 'nC': multiplier = 1e-9; break;
-                     case 'μC': multiplier = 1e-6; break;
-                     case 'C': multiplier = 1; break;
-                 }
-                const polarity = document.getElementById(`${chargeId}Polarity`).value;
-                const units = document.getElementById(`${chargeId}Units`).value;
-                
-                let multiplier = 1;
-                switch (units) {
-                    case 'nC': multiplier = 1e-9; break;
-                    case 'μC': multiplier = 1e-6; break;
-                    case 'C': multiplier = 1; break;
-                }
+    // El usuario introduce el valor absoluto
+    const valueAbs = Math.abs(parseFloat(document.getElementById(`${chargeId}Value`).value) || 0);
+    const pol      = document.getElementById(`${chargeId}Polarity`).value; // 'positive' | 'negative'
+    const units    = document.getElementById(`${chargeId}Units`).value;    // 'nC' | 'μC' | 'C'
+
+    let multiplier = 1;
+    switch (units) {
+        case 'nC': multiplier = 1e-9; break;
+        case 'μC': multiplier = 1e-6; break;
+        case 'C' : multiplier = 1;    break;
+    }
+
+    // q = ± |valor| * factor_unidades
+    return valueAbs * multiplier * (pol === 'negative' ? -1 : 1);
+}
+
                 
                 // q = ±valor_abs * factor_unidades
     return valueAbs * multiplier * (pol === 'negative' ? -1 : 1);
