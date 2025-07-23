@@ -600,19 +600,20 @@ el.addEventListener('input', () => {
             }
 
             getCoordinatesFromEvent(e) {
-            // Punto del cursor en coordenadas de pantalla
-            const pt = this.svg.createSVGPoint();
-            pt.x = e.clientX;
-            pt.y = e.clientY;
+// Punto del cursor en pantalla
+const pt = this.svg.createSVGPoint();
+pt.x = e.clientX;
+pt.y = e.clientY;
 
-            // Convertimos a coordenadas del grupo que está escalado (zoomGroup)
-            const local = pt.matrixTransform(this.zoomGroup.getScreenCTM().inverse());
+// Convertir al sistema de coordenadas del grupo con zoom
+const ctm = this.zoomGroup.getScreenCTM();
+const local = pt.matrixTransform(ctm.inverse());
 
-            // Pasamos a unidades del problema (escala en px/unidad y eje Y invertido)
-            const x = (local.x - this.centerX) / this.scale;
-            const y = -(local.y - this.centerY) / this.scale;
-            return { x, y };
-            }
+// Pasar a unidades (px -> unidades y eje Y invertido)
+const x = (local.x - this.centerX) / this.scale;
+const y = -(local.y - this.centerY) / this.scale;
+return { x, y };
+}
 
             updateChargeFromCoords(chargeId) {
                 const xInput = document.getElementById(`${chargeId}CoordX`);
