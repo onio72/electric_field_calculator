@@ -838,51 +838,52 @@ el.addEventListener('input', () => {
             }
 
             updateVectorVisuals(e1, e2, eTotal) {
-                const g = document.getElementById('vectors');
-                g.innerHTML = '';
+    const g = document.getElementById('vectors');
+    g.innerHTML = '';
 
-                const sx = this.centerX + this.testPoint.x * this.scale;
-                const sy = this.centerY - this.testPoint.y * this.scale;
-                const k  = 50 / this.zoomLevel; // factor visual
+    const sx = this.centerX + this.testPoint.x * this.scale;
+    const sy = this.centerY - this.testPoint.y * this.scale;
+    const k  = 50 / this.zoomLevel; // factor visual
 
-                // Naranja para E1 y E2
-                this.drawVector(g, sx, sy, e1.x * k, -e1.y * k, '#F97316', 'arrowhead-orange', 2, 'E₁');
-                this.drawVector(g, sx, sy, e2.x * k, -e2.y * k, '#F97316', 'arrowhead-orange', 2, 'E₂');
+    // Naranja para E1 y E2 (independiente de polaridad)
+    this.drawVector(g, sx, sy, e1.x * k, -e1.y * k, '#F97316', 'arrowhead-orange', 2, 'E₁');
+    this.drawVector(g, sx, sy, e2.x * k, -e2.y * k, '#F97316', 'arrowhead-orange', 2, 'E₂');
 
-                // Verde para el total
-                this.drawVector(g, sx, sy, eTotal.x * k, -eTotal.y * k, '#16A34A', 'arrowhead-green-total', 3, 'E_total');
-            }
+    // Verde para el total
+    this.drawVector(g, sx, sy, eTotal.x * k, -eTotal.y * k, '#16A34A', 'arrowhead-green-total', 3, 'E_total');
+}
 
-            drawVector(group, x0, y0, dx, dy, color, markerId, strokeWidth = 2, label = '') {
-                const len = Math.sqrt(dx*dx + dy*dy);
-                if (len < 5) return;
+drawVector(group, x0, y0, dx, dy, color, markerId, strokeWidth = 2, label = '') {
+    const len = Math.sqrt(dx*dx + dy*dy);
+    if (len < 5) return;
 
-                const NS = 'http://www.w3.org/2000/svg';
+    const NS = 'http://www.w3.org/2000/svg';
 
-                const line = document.createElementNS(NS, 'line');
-                line.setAttribute('x1', x0);
-                line.setAttribute('y1', y0);
-                line.setAttribute('x2', x0  dx);
-                line.setAttribute('y2', y0  dy);
-                line.setAttribute('stroke', color);
-                line.setAttribute('stroke-width', strokeWidth);
-                line.setAttribute('marker-end', `url(#${markerId})`);
-                group.appendChild(line);
+    const line = document.createElementNS(NS, 'line');
+    line.setAttribute('x1', x0);
+    line.setAttribute('y1', y0);
+    line.setAttribute('x2', x0 + dx);
+    line.setAttribute('y2', y0 + dy);
+    line.setAttribute('stroke', color);
+    line.setAttribute('stroke-width', strokeWidth);
+    line.setAttribute('marker-end', `url(#${markerId})`);
+    group.appendChild(line);
 
-                if (label) {
-                    const tx = x0  dx * 0.6;
-                    const ty = y0  dy * 0.6;
-                    const txt = document.createElementNS(NS, 'text');
-                    txt.setAttribute('x', tx);
-                    txt.setAttribute('y', ty - 4);
-                    txt.setAttribute('fill', color);
-                    txt.setAttribute('font-size', '12');
-                    txt.setAttribute('font-weight', 'bold');
-                    txt.setAttribute('text-anchor', 'middle');
-                    txt.textContent = label;
-                    group.appendChild(txt);
-                }
-            }
+    if (label) {
+        const tx = x0 + dx * 0.6;
+        const ty = y0 + dy * 0.6;
+        const text = document.createElementNS(NS, 'text');
+        text.setAttribute('x', tx);
+        text.setAttribute('y', ty - 4);
+        text.setAttribute('fill', color);
+        text.setAttribute('font-size', '12');
+        text.setAttribute('font-weight', 'bold');
+        text.setAttribute('text-anchor', 'middle');
+        text.textContent = label;
+        group.appendChild(text);
+    }
+}
+
 
            getChargeValue(chargeId) {
     // El usuario introduce el valor absoluto
