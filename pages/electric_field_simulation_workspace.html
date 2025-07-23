@@ -444,6 +444,13 @@
                 this.svg.addEventListener('mousemove', (e) => this.handleMouseMove(e));
                 this.svg.addEventListener('mouseup', (e) => this.handleMouseUp(e));
                 this.svg.addEventListener('mouseleave', (e) => this.handleMouseLeave(e));
+                // Forzar valores positivos en los inputs
+                ['q1Value','q2Value'].forEach(id => {
+                    const el = document.getElementById(id);
+                    el.addEventListener('input', () => {
+                        if (el.value < 0) el.value = Math.abs(el.value);
+                    });
+                });
                 
                 // Zoom functionality
                 this.svg.addEventListener('wheel', (e) => this.handleZoom(e));
@@ -861,10 +868,9 @@ el.addEventListener('input', () => {
                 group.appendChild(line);
             }
 
-            getChargeValue(chargeId) {
-                // El usuario introduce el valor absoluto; garantizamos positivo
-                const value = Math.abs(parseFloat(document.getElementById(`${chargeId}Value`).value) || 0);
-                 const polarity = document.getElementById(`${chargeId}Polarity`).value;
+           getChargeValue(chargeId) {
+                const valueAbs = Math.abs(parseFloat(document.getElementById(`${chargeId}Value`).value) || 0);
+                const pol = document.getElementById(`${chargeId}Polarity`).value;
                  const units = document.getElementById(`${chargeId}Units`).value;
                  
                  let multiplier = 1;
@@ -884,7 +890,7 @@ el.addEventListener('input', () => {
                 }
                 
                 // q = ±valor_abs * factor_unidades
-    return value * multiplier * (polarity === 'negative' ? -1 : 1);
+    return valueAbs * multiplier * (pol === 'negative' ? -1 : 1);
              
             }
 
