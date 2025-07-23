@@ -84,6 +84,12 @@
                                 <marker id="arrowhead-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
                                     <polygon points="0 0, 10 3.5, 0 7" fill="#059669"/>
                                 </marker>
+                                <marker id="arrowhead-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                    <polygon points="0 0, 10 3.5, 0 7" fill="#F97316"/>
+                                </marker>
+                                <marker id="arrowhead-green-total" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                    <polygon points="0 0, 10 3.5, 0 7" fill="#16A34A"/>
+                                </marker>
                             </defs>
                             
                             <!-- Zoomable and Pannable Group -->
@@ -322,10 +328,10 @@
                                 Vectores de Posición
                             </h3>
                             <div class="space-y-2 text-sm font-mono">
-                                <div>r₁ = <span id="r1Vector">No calculado</span></div>
-                                <div>r₂ = <span id="r2Vector">No calculado</span></div>
-                                <div class="pt-2 border-t border-secondary-200">|r₁| = <span id="r1Magnitude">No calculado</span></div>
-                                <div>|r₂| = <span id="r2Magnitude">No calculado</span></div>
+                                <div><span id="r1Vector">No calculado</span></div>
+                                <div><span id="r2Vector">No calculado</span></div>
+                                <div class="pt-2 border-t border-secondary-200"><span id="r1Magnitude">No calculado</span></div>
+                                <div><span id="r2Magnitude">No calculado</span></div>
                             </div>
                         </div>
 
@@ -336,8 +342,9 @@
                                 Vectores Unitarios
                             </h3>
                             <div class="space-y-2 text-sm font-mono">
-                                <div>û₁ = <span id="u1Vector">No calculado</span></div>
-                                <div>û₂ = <span id="u2Vector">No calculado</span></div>
+                                <div><span id="u1Vector">No calculado</span></div>
+                                <div><span id="u2Vector">No calculado</span></div>
+
                             </div>
                         </div>
 
@@ -348,10 +355,10 @@
                                 Campos Eléctricos
                             </h3>
                             <div class="space-y-2 text-sm font-mono">
-                                <div>|E₁| = <span id="e1Magnitude">No calculado</span></div>
-                                <div>|E₂| = <span id="e2Magnitude">No calculado</span></div>
-                                <div class="pt-2 border-t border-secondary-200">E₁ = <span id="e1Vector">No calculado</span></div>
-                                <div>E₂ = <span id="e2Vector">No calculado</span></div>
+                                <div><span id="e1Magnitude">No calculado</span></div>
+                                <div><span id="e2Magnitude">No calculado</span></div>
+                                <div class="pt-2 border-t border-secondary-200"><span id="e1Vector">No calculado</span></div>
+                                <div><span id="e2Vector">No calculado</span></div>
                             </div>
                         </div>
 
@@ -362,8 +369,8 @@
                                 Campo Total
                             </h3>
                             <div class="space-y-2 text-sm font-mono">
-                                <div>E_total = <span id="eTotalVector">No calculado</span></div>
-                                <div>|E_total| = <span id="eTotalMagnitude">No calculado</span></div>
+                                <div><span id="eTotalVector">No calculado</span></div>
+                                <div><span id="eTotalMagnitude">No calculado</span></div>
                             </div>
                             <div class="mt-3 space-y-1 text-xs text-secondary-600">
                                 <div class="flex items-center"><div class="w-3 h-1 bg-red-600 mr-2"></div><span>E₁ (Rojo - Positivo)</span></div>
@@ -697,7 +704,7 @@ el.addEventListener('input', () => {
                 // Get polarity from the dropdown to determine color and symbol
                 const chargePolarity = document.getElementById(`${chargeId}Polarity`).value;
                 const color = chargePolarity === 'positive' ? '#DC2626' : '#2563EB';
-                const symbol = chargePolarity === 'positive' ? '' : '-';
+                const symbol = chargePolarity === 'positive' ? '+' : '-';
 
                 const chargeGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
                 chargeGroup.id = `charge-${chargeId}`;
@@ -717,10 +724,12 @@ el.addEventListener('input', () => {
                 text.setAttribute('x', svgX);
                 text.setAttribute('y', svgY + 5);
                 text.setAttribute('text-anchor', 'middle');
-                text.setAttribute('fill', 'white');
-                text.setAttribute('font-size', '14');
+                text.setAttribute('fill', '#FFFFFF');
+                text.setAttribute('font-size', '16');
                 text.setAttribute('font-weight', 'bold');
                 text.textContent = symbol;
+                text.setAttribute('stroke', '#FFFFFF');
+                text.setAttribute('stroke-width', '0.4');
 
                 const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
                 label.setAttribute('x', svgX);
@@ -808,64 +817,71 @@ el.addEventListener('input', () => {
                 const eTotalMag = Math.sqrt(eTotal.x * eTotal.x + eTotal.y * eTotal.y);
 
                 // Update UI
-                document.getElementById('r1Vector').textContent = `(${r1.x.toFixed(2)}, ${r1.y.toFixed(2)}) m`;
-                document.getElementById('r2Vector').textContent = `(${r2.x.toFixed(2)}, ${r2.y.toFixed(2)}) m`;
-                document.getElementById('r1Magnitude').textContent = r1Mag.toFixed(2) + ' m';
-                document.getElementById('r2Magnitude').textContent = r2Mag.toFixed(2) + ' m';
+                document.getElementById('r1Vector').textContent = `r⃗₁ = (${r1.x.toFixed(2)}, ${r1.y.toFixed(2)}) m`;
+                document.getElementById('r2Vector').textContent = `r⃗₂ = (${r2.x.toFixed(2)}, ${r2.y.toFixed(2)}) m`;
+                document.getElementById('r1Magnitude').textContent = `|r⃗₁| = ${r1Mag.toFixed(2)} m`;
+                document.getElementById('r2Magnitude').textContent = `|r⃗₂| = ${r2Mag.toFixed(2)} m`;
 
-                document.getElementById('u1Vector').textContent = `(${u1.x.toFixed(3)}, ${u1.y.toFixed(3)})`;
-                document.getElementById('u2Vector').textContent = `(${u2.x.toFixed(3)}, ${u2.y.toFixed(3)})`;
+                document.getElementById('u1Vector').textContent = `û₁ = (${u1.x.toFixed(3)}, ${u1.y.toFixed(3)})`;
+                document.getElementById('u2Vector').textContent = `û₂ = (${u2.x.toFixed(3)}, ${u2.y.toFixed(3)})`;
 
-                document.getElementById('e1Magnitude').textContent = `${e1Mag.toExponential(2)} N/C`;
-                document.getElementById('e2Magnitude').textContent = `${e2Mag.toExponential(2)} N/C`;
-                document.getElementById('e1Vector').textContent = `(${e1.x.toExponential(2)}, ${e1.y.toExponential(2)}) N/C`;
-                document.getElementById('e2Vector').textContent = `(${e2.x.toExponential(2)}, ${e2.y.toExponential(2)}) N/C`;
+                document.getElementById('e1Magnitude').textContent = `|E⃗₁| = ${e1Mag.toExponential(2)} N/C`;
+                document.getElementById('e2Magnitude').textContent = `|E⃗₂| = ${e2Mag.toExponential(2)} N/C`;
+                document.getElementById('e1Vector').textContent   = `E⃗₁ = (${e1.x.toExponential(2)}, ${e1.y.toExponential(2)}) N/C`;
+                document.getElementById('e2Vector').textContent   = `E⃗₂ = (${e2.x.toExponential(2)}, ${e2.y.toExponential(2)}) N/C`;
 
-                document.getElementById('eTotalVector').textContent = `(${eTotal.x.toExponential(2)}, ${eTotal.y.toExponential(2)}) N/C`;
-                document.getElementById('eTotalMagnitude').textContent = `${eTotalMag.toExponential(2)} N/C`;
+                document.getElementById('eTotalVector').textContent    = `E⃗_total = (${eTotal.x.toExponential(2)}, ${eTotal.y.toExponential(2)}) N/C`;
+                document.getElementById('eTotalMagnitude').textContent = `|E⃗_total| = ${eTotalMag.toExponential(2)} N/C`;
 
                 // Update vectors on SVG
                 this.updateVectorVisuals(e1, e2, eTotal);
             }
 
             updateVectorVisuals(e1, e2, eTotal) {
-                const vectorsGroup = document.getElementById('vectors');
-                vectorsGroup.innerHTML = '';
+                const g = document.getElementById('vectors');
+                g.innerHTML = '';
 
-                const testSvgX = this.centerX + this.testPoint.x * this.scale;
-                const testSvgY = this.centerY - this.testPoint.y * this.scale;
+                const sx = this.centerX  this.testPoint.x * this.scale;
+                const sy = this.centerY - this.testPoint.y * this.scale;
+                const k  = 50 / this.zoomLevel; // factor visual
 
-                // Scale factor for vector display
-                const scaleFactor = 50 / this.zoomLevel; // Adjust for zoom
+                // Naranja para E1 y E2
+                this.drawVector(g, sx, sy, e1.x * k, -e1.y * k, '#F97316', 'arrowhead-orange', 2, 'E₁');
+                this.drawVector(g, sx, sy, e2.x * k, -e2.y * k, '#F97316', 'arrowhead-orange', 2, 'E₂');
 
-                // Draw E1 vector with color matching charge polarity
-                const q1Polarity = document.getElementById('q1Polarity').value;
-                const e1Color = q1Polarity === 'positive' ? '#DC2626' : '#2563EB';
-                this.drawVector(vectorsGroup, testSvgX, testSvgY, e1.x * scaleFactor, -e1.y * scaleFactor, e1Color, 'arrowhead-red');
-                
-                // Draw E2 vector with color matching charge polarity  
-                const q2Polarity = document.getElementById('q2Polarity').value;
-                const e2Color = q2Polarity === 'positive' ? '#DC2626' : '#2563EB';
-                this.drawVector(vectorsGroup, testSvgX, testSvgY, e2.x * scaleFactor, -e2.y * scaleFactor, e2Color, 'arrowhead-red');
-                
-                // Draw total vector (blue)
-                this.drawVector(vectorsGroup, testSvgX, testSvgY, eTotal.x * scaleFactor, -eTotal.y * scaleFactor, '#2563EB', 'arrowhead', 3);
+                // Verde para el total
+                this.drawVector(g, sx, sy, eTotal.x * k, -eTotal.y * k, '#16A34A', 'arrowhead-green-total', 3, 'E_total');
             }
 
-            drawVector(group, startX, startY, dx, dy, color, markerEnd, strokeWidth = 2) {
-                const length = Math.sqrt(dx * dx + dy * dy);
-                if (length < 5) return; // Don't draw very small vectors
+            drawVector(group, x0, y0, dx, dy, color, markerId, strokeWidth = 2, label = '') {
+                const len = Math.sqrt(dx*dx  dy*dy);
+                if (len < 5) return;
 
-                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                line.setAttribute('x1', startX);
-                line.setAttribute('y1', startY);
-                line.setAttribute('x2', startX + dx);
-                line.setAttribute('y2', startY + dy);
+                const NS = 'http://www.w3.org/2000/svg';
+
+                const line = document.createElementNS(NS, 'line');
+                line.setAttribute('x1', x0);
+                line.setAttribute('y1', y0);
+                line.setAttribute('x2', x0  dx);
+                line.setAttribute('y2', y0  dy);
                 line.setAttribute('stroke', color);
                 line.setAttribute('stroke-width', strokeWidth);
-                line.setAttribute('marker-end', `url(#${markerEnd})`);
-                
+                line.setAttribute('marker-end', `url(#${markerId})`);
                 group.appendChild(line);
+
+                if (label) {
+                    const tx = x0  dx * 0.6;
+                    const ty = y0  dy * 0.6;
+                    const txt = document.createElementNS(NS, 'text');
+                    txt.setAttribute('x', tx);
+                    txt.setAttribute('y', ty - 4);
+                    txt.setAttribute('fill', color);
+                    txt.setAttribute('font-size', '12');
+                    txt.setAttribute('font-weight', 'bold');
+                    txt.setAttribute('text-anchor', 'middle');
+                    txt.textContent = label;
+                    group.appendChild(txt);
+                }
             }
 
            getChargeValue(chargeId) {
