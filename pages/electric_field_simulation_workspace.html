@@ -870,26 +870,17 @@ el.addEventListener('input', () => {
 
            getChargeValue(chargeId) {
     // El usuario introduce el valor absoluto
-    const valueAbs = Math.abs(parseFloat(document.getElementById(`${chargeId}Value`).value) || 0);
-    const pol      = document.getElementById(`${chargeId}Polarity`).value; // 'positive' | 'negative'
-    const units    = document.getElementById(`${chargeId}Units`).value;    // 'nC' | 'μC' | 'C'
+    const raw = parseFloat(document.getElementById(`${chargeId}Value`).value);
+    const valueAbs = isNaN(raw) ? 0 : Math.abs(raw);
 
-    let multiplier = 1;
-    switch (units) {
-        case 'nC': multiplier = 1e-9; break;
-        case 'μC': multiplier = 1e-6; break;
-        case 'C' : multiplier = 1;    break;
-    }
+    const pol  = document.getElementById(`${chargeId}Polarity`).value; // 'positive' | 'negative'
+    const unit = document.getElementById(`${chargeId}Units`).value;    // 'nC' | 'μC' | 'C'
+
+    const mult = unit === 'nC' ? 1e-9 : unit === 'μC' ? 1e-6 : 1;
 
     // q = ± |valor| * factor_unidades
-    return valueAbs * multiplier * (pol === 'negative' ? -1 : 1);
+    return valueAbs * mult * (pol === 'negative' ? -1 : 1);
 }
-
-                
-                // q = ±valor_abs * factor_unidades
-    return valueAbs * multiplier * (pol === 'negative' ? -1 : 1);
-             
-            }
 
             updateCoordinateDisplay(e) {
                 const coords = this.getCoordinatesFromEvent(e);
