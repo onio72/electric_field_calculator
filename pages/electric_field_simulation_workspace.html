@@ -841,7 +841,7 @@ el.addEventListener('input', () => {
                 const g = document.getElementById('vectors');
                 g.innerHTML = '';
 
-                const sx = this.centerX  this.testPoint.x * this.scale;
+                const sx = this.centerX + this.testPoint.x * this.scale;
                 const sy = this.centerY - this.testPoint.y * this.scale;
                 const k  = 50 / this.zoomLevel; // factor visual
 
