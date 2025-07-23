@@ -592,15 +592,18 @@
             }
 
             getCoordinatesFromEvent(e) {
-                const rect = this.svg.getBoundingClientRect();
-                const svgX = (e.clientX - rect.left) * (600 / rect.width);
-                const svgY = (e.clientY - rect.top) * (400 / rect.height);
-                
-                // Account for zoom
-                const x = ((svgX - this.centerX) / this.scale) / this.zoomLevel;
-                const y = -((svgY - this.centerY) / this.scale) / this.zoomLevel;
-                
-                return { x, y };
+            // Punto en coordenadas de pantalla
+            const pt = this.svg.createSVGPoint();
+            pt.x = e.clientX;
+            pt.y = e.clientY;
+
+            // Convertir a coordenadas locales del grupo con zoom
+            const local = pt.matrixTransform(this.zoomGroup.getScreenCTM().inverse());
+
+            // Pasar a unidades del problema
+            const x = (local.x - this.centerX) / this.scale;
+            const y = -(local.y - this.centerY) / this.scale;
+            return { x, y };
             }
 
             updateChargeFromCoords(chargeId) {
