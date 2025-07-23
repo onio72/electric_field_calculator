@@ -61,12 +61,18 @@
                              viewBox="0 0 600 400" preserveAspectRatio="xMidYMid meet">
                             <!-- Enhanced Grid with Dynamic Patterns -->
                             <defs>
-                                <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
-                                    <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#CBD5E1" stroke-width="1"/>
-                                </pattern>
-                                <pattern id="gridFine" width="6" height="6" patternUnits="userSpaceOnUse">
-                                    <path d="M 6 0 L 0 0 0 6" fill="none" stroke="#E5E7EB" stroke-width="0.5"/>
-                                </pattern>
+                                <!-- 200 % 30 = 20  => desplazamos la rejilla gruesa 20px en Y -->
+<pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse"
+         patternTransform="translate(0,20)">
+    <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#CBD5E1" stroke-width="1"/>
+</pattern>
+
+<!-- 200 % 6 = 2 => desplazamos la rejilla fina 2px en Y -->
+<pattern id="gridFine" width="6" height="6" patternUnits="userSpaceOnUse"
+         patternTransform="translate(0,2)">
+    <path d="M 6 0 L 0 0 0 6" fill="none" stroke="#E5E7EB" stroke-width="0.5"/>
+</pattern>
+
                                 <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
                                     <polygon points="0 0, 10 3.5, 0 7" fill="#2563EB"/>
                                 </marker>
