@@ -89,10 +89,10 @@
                             <!-- Zoomable and Pannable Group -->
                             <g id="zoomGroup">
                                 <!-- Fine Grid Background (for higher zoom levels) -->
-                                <rect width="100%" height="100%" fill="url(#gridFine)" opacity="0"/>
+                                <rect width="100%" height="100%" fill="url(#gridFine)" opacity="0" pointer-events="none"/>
                                 
                                 <!-- Main Grid Background -->
-                                <rect width="100%" height="100%" fill="url(#grid)"/>
+                                <rect width="100%" height="100%" fill="url(#grid)" pointer-events="none"/>
                                 
                                 <!-- Enhanced Centered Axes -->
                                 <line x1="300" y1="0" x2="300" y2="400" stroke="#475569" stroke-width="2"/>
@@ -600,15 +600,15 @@ el.addEventListener('input', () => {
             }
 
             getCoordinatesFromEvent(e) {
-            // Punto en coordenadas de pantalla
+            // Punto del cursor en coordenadas de pantalla
             const pt = this.svg.createSVGPoint();
             pt.x = e.clientX;
             pt.y = e.clientY;
 
-            // Convertir a coordenadas locales del grupo con zoom
+            // Convertimos a coordenadas del grupo que está escalado (zoomGroup)
             const local = pt.matrixTransform(this.zoomGroup.getScreenCTM().inverse());
 
-            // Pasar a unidades del problema
+            // Pasamos a unidades del problema (escala en px/unidad y eje Y invertido)
             const x = (local.x - this.centerX) / this.scale;
             const y = -(local.y - this.centerY) / this.scale;
             return { x, y };
