@@ -600,20 +600,14 @@ el.addEventListener('input', () => {
             }
 
             getCoordinatesFromEvent(e) {
-// Punto del cursor en pantalla
-const pt = this.svg.createSVGPoint();
-pt.x = e.clientX;
-pt.y = e.clientY;
-
-// Convertir al sistema de coordenadas del grupo con zoom
-const ctm = this.zoomGroup.getScreenCTM();
-const local = pt.matrixTransform(ctm.inverse());
-
-// Pasar a unidades (px -> unidades y eje Y invertido)
-const x = (local.x - this.centerX) / this.scale;
-const y = -(local.y - this.centerY) / this.scale;
-return { x, y };
-}
+                const pt = this.svg.createSVGPoint();
+                pt.x = e.clientX;
+                pt.y = e.clientY;
+                const local = pt.matrixTransform(this.zoomGroup.getScreenCTM().inverse());
+                const x = (local.x - this.centerX) / this.scale;
+                const y = -(local.y - this.centerY) / this.scale;
+                return { x, y };
+            }
 
             updateChargeFromCoords(chargeId) {
                 const xInput = document.getElementById(`${chargeId}CoordX`);
