@@ -171,7 +171,7 @@
                     <div class="grid grid-cols-2 gap-2">
                         <div>
                             <label class="block text-sm font-medium text-text-secondary mb-1">Valor</label>
-                            <input type="number" id="q1Value" class="input-field text-sm" placeholder="5.0" value="5.0" step="0.1" />
+                             <input type="number" id="q1Value" class="input-field text-sm" placeholder="5.0" value="5.0" step="0.1" min="0" />
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-text-secondary mb-1">Unidades</label>
@@ -221,7 +221,7 @@
                     <div class="grid grid-cols-2 gap-2">
                         <div>
                             <label class="block text-sm font-medium text-text-secondary mb-1">Valor</label>
-                            <input type="number" id="q2Value" class="input-field text-sm" placeholder="-3.0" value="-3.0" step="0.1" />
+                            <input type="number" id="q2Value" class="input-field text-sm" placeholder="3.0" value="3.0" step="0.1" min="0" />
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-text-secondary mb-1">Unidades</label>
@@ -453,11 +453,19 @@
 
                 // Control panel listeners with charge visualization update
                 ['q1Value', 'q1Units'].forEach(id => {
-                    document.getElementById(id).addEventListener('change', () => this.updateCalculations());
-                });
-                ['q2Value', 'q2Units'].forEach(id => {
-                    document.getElementById(id).addEventListener('change', () => this.updateCalculations());
-                });
+ document.getElementById(id).addEventListener('change', () => this.updateCalculations());
+});
+['q2Value', 'q2Units'].forEach(id => {
+document.getElementById(id).addEventListener('change', () => this.updateCalculations());
+});
+
+// Forzar que q1Value y q2Value nunca queden negativos
+['q1Value','q2Value'].forEach(id => {
+const el = document.getElementById(id);
+el.addEventListener('input', () => {
+ if (el.value < 0) el.value = Math.abs(el.value);
+        });
+        });
 
                 // Add polarity change listeners to update charge visualization
                 document.getElementById('q1Polarity').addEventListener('change', () => {
@@ -859,7 +867,17 @@
             }
 
             getChargeValue(chargeId) {
-                const value = parseFloat(document.getElementById(`${chargeId}Value`).value) || 0;
+                // El usuario introduce el valor absoluto; garantizamos positivo
+                const value = Math.abs(parseFloat(document.getElementById(`${chargeId}Value`).value) || 0);
+                 const polarity = document.getElementById(`${chargeId}Polarity`).value;
+                 const units = document.getElementById(`${chargeId}Units`).value;
+                 
+                 let multiplier = 1;
+                 switch (units) {
+                     case 'nC': multiplier = 1e-9; break;
+                     case 'μC': multiplier = 1e-6; break;
+                     case 'C': multiplier = 1; break;
+                 }
                 const polarity = document.getElementById(`${chargeId}Polarity`).value;
                 const units = document.getElementById(`${chargeId}Units`).value;
                 
@@ -870,7 +888,9 @@
                     case 'C': multiplier = 1; break;
                 }
                 
-                return value * multiplier * (polarity === 'negative' ? -1 : 1);
+                // q = ±valor_abs * factor_unidades
+    return value * multiplier * (polarity === 'negative' ? -1 : 1);
+             
             }
 
             updateCoordinateDisplay(e) {
