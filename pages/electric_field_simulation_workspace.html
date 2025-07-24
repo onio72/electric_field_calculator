@@ -1,35 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Calculadora de Campo Eléctrico - Espacio de Simulación</title>
-    <link rel="stylesheet" href="../css/main.css" />
-    <link rel="icon" href="../public/favicon.ico">
-    <link rel="manifest" href="../public/manifest.json">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-    <script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Felectricf1586back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.6"></script>
-    <!-- KaTeX: fórmulas matemáticas -->
-<link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
-      integrity="sha384-..." crossorigin="anonymous">
-<script defer
-        src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
-        integrity="sha384-..." crossorigin="anonymous"></script>
-<script defer
-        src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-        integrity="sha384-..." crossorigin="anonymous"
-        onload="renderMathInElement(
-           document.getElementById('calculationsContent'),
-           {delimiters: [{left:'$', right:'$', display:false}]}
-        );">
-</script>
-<!-- KaTeX: renderizado de matemáticas -->
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-  <script defer
-          src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora de Campo Eléctrico – Espacio de Simulación</title>
+
+  <!-- Estilos y scripts principales -->
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="icon" href="../public/favicon.ico" />
+  <link rel="manifest" href="../public/manifest.json" />
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    rel="stylesheet"
+  />
+  <script
+    type="module"
+    src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Felectricf1586back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.6"
+  ></script>
+
+  <!-- KaTeX: renderizado de fórmulas -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+  />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 </head>
+
 <body class="bg-background min-h-screen">
     <!-- Header -->
     <header class="bg-surface shadow-subtle border-b border-secondary-200">
@@ -393,10 +389,16 @@
                                 <div><span id="eTotalMagnitude">No calculado</span></div>
                             </div>
                             <div class="mt-3 space-y-1 text-xs text-secondary-600">
-                                <div class="flex items-center"><div class="w-3 h-1 bg-red-600 mr-2"></div><span>E₁ (Rojo - Positivo)</span></div>
-                                <div class="flex items-center"><div class="w-3 h-1 bg-blue-600 mr-2"></div><span>E₂ (Azul - Negativo)</span></div>
-                                <div class="flex items-center"><div class="w-3 h-1 bg-primary mr-2"></div><span>E_total (Azul)</span></div>
-                            </div>
+  <div class="flex items-center">
+    <div class="w-3 h-1 bg-orange-500 mr-2"></div>
+    <span>E₁ y E₂ (Naranja)</span>
+  </div>
+  <div class="flex items-center">
+    <div class="w-3 h-1 bg-green-600 mr-2"></div>
+    <span>E⃗_total (Verde)</span>
+  </div>
+</div>
+
                         </div>
                     </div>
                 </div>
@@ -855,7 +857,8 @@ el.addEventListener('input', () => {
     renderTex('e1Magnitude', `|\\vec{E}_1|=${e1Mag.toExponential(2)}\\,\\mathrm{N/C}`);
     renderTex('e2Magnitude', `|\\vec{E}_2|=${e2Mag.toExponential(2)}\\,\\mathrm{N/C}`);
     renderTex('e1Vector',    `\\vec{E}_1=( ${e1.x.toExponential(2)},\\; ${e1.y.toExponential(2)} )\\,\\mathrm{N/C}`);
-    renderTex('e2Vector',    `\\vec{E}_2=( ${e2.x.toExponential(2)},\\; ${e2.y.toExponential(2)} )\\,\\mathrm{N/C`);
+    renderTex('e2Vector', `\\vec{E}_2=( ${e2.x.toExponential(2)},\\; ${e2.y.toExponential(2)} )\\,\\mathrm{N/C}`);
+
 
     renderTex('eTotalVector',    `\\vec{E}_{\\mathrm{total}}=( ${eTotal.x.toExponential(2)},\\; ${eTotal.y.toExponential(2)} )\\,\\mathrm{N/C}`);
     renderTex('eTotalMagnitude', `|\\vec{E}_{\\mathrm{total}}|=${eTotalMag.toExponential(2)}\\,\\mathrm{N/C}`);
