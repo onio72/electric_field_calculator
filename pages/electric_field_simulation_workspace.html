@@ -108,68 +108,50 @@
                                 </marker>
                             </defs>
                             
-                            <!-- Zoomable and Pannable Group -->
-                            <g id="zoomGroup">
-                                <!-- Fine Grid Background (for higher zoom levels) -->
-                                <rect width="100%" height="100%" fill="url(#gridFine)" opacity="0" pointer-events="none"/>
-                                
-                                <!-- Main Grid Background -->
-                                <rect width="100%" height="100%" fill="url(#grid)" pointer-events="none"/>
-                                
-                                <!-- Enhanced Centered Axes -->
-                                <line x1="300" y1="0" x2="300" y2="400" stroke="#475569" stroke-width="2"/>
-                                <line x1="0" y1="200" x2="600" y2="200" stroke="#475569" stroke-width="2"/>
-                                
-                                <!-- Extended Axis Labels -->
-                                <text x="580" y="195" fill="#475569" font-size="14" font-weight="500">X</text>
-                                <text x="305" y="15" fill="#475569" font-size="14" font-weight="500">Y</text>
-                                
-                                <!-- Complete Grid Coordinates - Extended to edges -->
-                                <g id="gridCoordinates">
-                                    <!-- Positive X-axis markers (extended) -->
-                                    <text x="330" y="195" fill="#64748B" font-size="10">1</text>
-                                    <text x="360" y="195" fill="#64748B" font-size="10">2</text>
-                                    <text x="390" y="195" fill="#64748B" font-size="10">3</text>
-                                    <text x="420" y="195" fill="#64748B" font-size="10">4</text>
-                                    <text x="450" y="195" fill="#64748B" font-size="10">5</text>
-                                    <text x="480" y="195" fill="#64748B" font-size="10">6</text>
-                                    <text x="510" y="195" fill="#64748B" font-size="10">7</text>
-                                    <text x="540" y="195" fill="#64748B" font-size="10">8</text>
-                                    <text x="570" y="195" fill="#64748B" font-size="10">9</text>
-                                    
-                                    <!-- Negative X-axis markers (extended) -->
-                                    <text x="270" y="195" fill="#64748B" font-size="10">-1</text>
-                                    <text x="240" y="195" fill="#64748B" font-size="10">-2</text>
-                                    <text x="210" y="195" fill="#64748B" font-size="10">-3</text>
-                                    <text x="180" y="195" fill="#64748B" font-size="10">-4</text>
-                                    <text x="150" y="195" fill="#64748B" font-size="10">-5</text>
-                                    <text x="120" y="195" fill="#64748B" font-size="10">-6</text>
-                                    <text x="90"  y="195" fill="#64748B" font-size="10">-7</text>
-                                    <text x="60"  y="195" fill="#64748B" font-size="10">-8</text>
-                                    <text x="30"  y="195" fill="#64748B" font-size="10">-9</text>
-                                    
-                                    <!-- Positive Y-axis markers (extended) -->
-                                    <text x="305" y="170" fill="#64748B" font-size="10">1</text>
-                                    <text x="305" y="140" fill="#64748B" font-size="10">2</text>
-                                    <text x="305" y="110" fill="#64748B" font-size="10">3</text>
-                                    <text x="305" y="80"  fill="#64748B" font-size="10">4</text>
-                                    <text x="305" y="50"  fill="#64748B" font-size="10">5</text>
-                                    <text x="305" y="20"  fill="#64748B" font-size="10">6</text>
-                                    
-                                    <!-- Negative Y-axis markers (extended) -->
-                                    <text x="305" y="230" fill="#64748B" font-size="10">-1</text>
-                                    <text x="305" y="260" fill="#64748B" font-size="10">-2</text>
-                                    <text x="305" y="290" fill="#64748B" font-size="10">-3</text>
-                                    <text x="305" y="320" fill="#64748B" font-size="10">-4</text>
-                                    <text x="305" y="350" fill="#64748B" font-size="10">-5</text>
-                                    <text x="305" y="380" fill="#64748B" font-size="10">-6</text>
-                                </g>
-                                
-                                <!-- Interactive Elements -->
-                                <g id="charges"></g>
-                                <g id="vectors"></g>
-                                <g id="testPoint"></g>
-                            </g>
+                            <!-- Zoomable only: grid and axes -->
+<g id="zoomGroup">
+  <g id="gridGroup">
+    <!-- Fine Grid Background -->
+    <rect width="100%" height="100%" fill="url(#gridFine)" opacity="0" pointer-events="none"/>
+    <!-- Main Grid Background -->
+    <rect width="100%" height="100%" fill="url(#grid)" pointer-events="none"/>
+
+    <!-- Centered Axes -->
+    <line x1="300" y1="0"   x2="300" y2="400" stroke="#475569" stroke-width="2"/>
+    <line x1="0"   y1="200" x2="600" y2="200" stroke="#475569" stroke-width="2"/>
+
+    <!-- Axis Labels -->
+    <text x="580" y="195" fill="#475569" font-size="14" font-weight="500">X</text>
+    <text x="305" y="15"  fill="#475569" font-size="14" font-weight="500">Y</text>
+
+    <!-- Grid Coordinates (extended) -->
+    <g id="gridCoordinates">
+      <!-- Positive X -->
+      <text x="330" y="195" fill="#64748B" font-size="10">1</text>
+      <text x="360" y="195" fill="#64748B" font-size="10">2</text>
+      <!-- … hasta 9 -->
+      <text x="570" y="195" fill="#64748B" font-size="10">9</text>
+      <!-- Negative X -->
+      <text x="270" y="195" fill="#64748B" font-size="10">-1</text>
+      <!-- … hasta -9 -->
+      <text x="30"  y="195" fill="#64748B" font-size="10">-9</text>
+      <!-- Positive Y -->
+      <text x="305" y="170" fill="#64748B" font-size="10">1</text>
+      <!-- … hasta 6 -->
+      <text x="305" y="20"  fill="#64748B" font-size="10">6</text>
+      <!-- Negative Y -->
+      <text x="305" y="230" fill="#64748B" font-size="10">-1</text>
+      <!-- … hasta -6 -->
+      <text x="305" y="380" fill="#64748B" font-size="10">-6</text>
+    </g>
+  </g>
+</g>
+
+<!-- Fuera del zoom: cargas, vectores y punto de testeo mantienen tamaño fijo -->
+<g id="charges"></g>
+<g id="vectors"></g>
+<g id="testPoint"></g>
+
                         </svg>
                         
                         <!-- Enhanced Coordinate Display -->
