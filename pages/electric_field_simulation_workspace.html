@@ -832,7 +832,7 @@ el.addEventListener('input', () => {
                 const eTotal = { x: e1.x + e2.x, y: e1.y + e2.y };
                 const eTotalMag = Math.sqrt(eTotal.x * eTotal.x + eTotal.y * eTotal.y);
 
-                // Update UI con fórmulas KaTeX
+                // Update UI con fórmulas KaTeX (con escapes JS correctos)
 document.getElementById('r1Vector').innerHTML    =
   `$\\vec{r}_1=( ${r1.x.toFixed(2)},\\; ${r1.y.toFixed(2)} )\\,\\mathrm{m}$`;
 document.getElementById('r2Vector').innerHTML    =
@@ -861,8 +861,9 @@ document.getElementById('eTotalVector').innerHTML    =
 document.getElementById('eTotalMagnitude').innerHTML =
   `$|\\vec{E}_{\\mathrm{total}}|=${eTotalMag.toExponential(2)}\\,\\mathrm{N/C}$`;
 
-// Ahora sí, volvemos a dibujar los vectores en el SVG
+// Finalmente, redibuja los vectores en el SVG
 this.updateVectorVisuals(e1, e2, eTotal);
+
 
 
             }
