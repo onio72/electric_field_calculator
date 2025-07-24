@@ -27,6 +27,38 @@
 </head>
 
 <body class="bg-background min-h-screen">
+  <!-- Instructions Modal (Updated) -->
+<div id="instructionsModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+  <div class="bg-surface rounded-xl shadow-lg max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl font-semibold text-text-primary">Instrucciones de Uso</h2>
+        <button id="closeInstructions" class="text-secondary-600 hover:text-text-primary">
+          <i class="fas fa-times text-xl"></i>
+        </button>
+      </div>
+      <div class="space-y-4 text-sm text-text-secondary">
+        <div>
+          <h3 class="font-semibold text-text-primary mb-2">1. Colocar y Editar Cargas</h3>
+          <p>Haz clic en la cuadrícula para colocar cargas o usa los campos de coordenadas para posicionarlas exactamente. Arrastra las cargas para moverlas interactivamente.</p>
+        </div>
+        <div>
+          <h3 class="font-semibold text-text-primary mb-2">2. Navegación y Zoom</h3>
+          <p>Usa la rueda del ratón para hacer zoom. La cuadrícula se escala, pero las cargas y el punto de testeo mantienen su tamaño.</p>
+        </div>
+        <div>
+          <h3 class="font-semibold text-text-primary mb-2">3. Cálculo del Campo</h3>
+          <p>Coloca el punto de cálculo haciendo clic o editando sus coordenadas. Los resultados aparecen en el panel separado de cálculos.</p>
+        </div>
+        <div>
+          <h3 class="font-semibold text-text-primary mb-2">4. Interfaz Mejorada</h3>
+          <p>El panel de cuadrícula y el de cálculos están separados para evitar solapamientos y mejorar la visualización.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
     <!-- Header -->
     <header class="bg-surface shadow-subtle border-b border-secondary-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
