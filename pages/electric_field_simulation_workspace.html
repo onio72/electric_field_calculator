@@ -816,25 +816,26 @@ el.addEventListener('input', () => {
                 const eTotal = { x: e1.x + e2.x, y: e1.y + e2.y };
                 const eTotalMag = Math.sqrt(eTotal.x * eTotal.x + eTotal.y * eTotal.y);
 
-                // Update UI with vector notation
-document.getElementById('r1Vector').textContent = `r⃗₁ = (${r1.x.toFixed(2)}, ${r1.y.toFixed(2)}) m`;
-document.getElementById('r2Vector').textContent = `r⃗₂ = (${r2.x.toFixed(2)}, ${r2.y.toFixed(2)}) m`;
-document.getElementById('r1Magnitude').textContent = `|r⃗₁| = ${r1Mag.toFixed(2)} m`;
-document.getElementById('r2Magnitude').textContent = `|r⃗₂| = ${r2Mag.toFixed(2)} m`;
+                // Update UI with vector notation (Unicode escapes)
+document.getElementById('r1Vector').textContent    = `r\u20D7\u2081 = (${r1.x.toFixed(2)}, ${r1.y.toFixed(2)}) m`;
+document.getElementById('r2Vector').textContent    = `r\u20D7\u2082 = (${r2.x.toFixed(2)}, ${r2.y.toFixed(2)}) m`;
+document.getElementById('r1Magnitude').textContent = `|r\u20D7\u2081| = ${r1Mag.toFixed(2)} m`;
+document.getElementById('r2Magnitude').textContent = `|r\u20D7\u2082| = ${r2Mag.toFixed(2)} m`;
 
-document.getElementById('u1Vector').textContent = `û₁ = (${u1.x.toFixed(3)}, ${u1.y.toFixed(3)})`;
-document.getElementById('u2Vector').textContent = `û₂ = (${u2.x.toFixed(3)}, ${u2.y.toFixed(3)})`;
+document.getElementById('u1Vector').textContent    = `û\u2081 = (${u1.x.toFixed(3)}, ${u1.y.toFixed(3)})`;
+document.getElementById('u2Vector').textContent    = `û\u2082 = (${u2.x.toFixed(3)}, ${u2.y.toFixed(3)})`;
 
-document.getElementById('e1Magnitude').textContent = `|E⃗₁| = ${e1Mag.toExponential(2)} N/C`;
-document.getElementById('e2Magnitude').textContent = `|E⃗₂| = ${e2Mag.toExponential(2)} N/C`;
-document.getElementById('e1Vector').textContent   = `E⃗₁ = (${e1.x.toExponential(2)}, ${e1.y.toExponential(2)}) N/C`;
-document.getElementById('e2Vector').textContent   = `E⃗₂ = (${e2.x.toExponential(2)}, ${e2.y.toExponential(2)}) N/C`;
+document.getElementById('e1Magnitude').textContent = `|E\u20D7\u2081| = ${e1Mag.toExponential(2)} N/C`;
+document.getElementById('e2Magnitude').textContent = `|E\u20D7\u2082| = ${e2Mag.toExponential(2)} N/C`;
+document.getElementById('e1Vector').textContent    = `E\u20D7\u2081 = (${e1.x.toExponential(2)}, ${e1.y.toExponential(2)}) N/C`;
+document.getElementById('e2Vector').textContent    = `E\u20D7\u2082 = (${e2.x.toExponential(2)}, ${e2.y.toExponential(2)}) N/C`;
 
-document.getElementById('eTotalVector').textContent    = `E⃗_total = (${eTotal.x.toExponential(2)}, ${eTotal.y.toExponential(2)}) N/C`;
-document.getElementById('eTotalMagnitude').textContent = `|E⃗_total| = ${eTotalMag.toExponential(2)} N/C`;
+document.getElementById('eTotalVector').textContent    = `E\u20D7\u209C\u2092\u209C\u2090\u2097 = (${eTotal.x.toExponential(2)}, ${eTotal.y.toExponential(2)}) N/C`;
+document.getElementById('eTotalMagnitude').textContent = `|E\u20D7\u209C\u2092\u209C\u2090\u2097| = ${eTotalMag.toExponential(2)} N/C`;
 
 // Update vectors on SVG
 this.updateVectorVisuals(e1, e2, eTotal);
+
             }
 
             updateVectorVisuals(e1, e2, eTotal) {
