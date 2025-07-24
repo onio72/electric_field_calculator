@@ -9,6 +9,22 @@
     <link rel="manifest" href="../public/manifest.json">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Felectricf1586back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.6"></script>
+    <!-- KaTeX: fórmulas matemáticas -->
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+      integrity="sha384-..." crossorigin="anonymous">
+<script defer
+        src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+        integrity="sha384-..." crossorigin="anonymous"></script>
+<script defer
+        src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        integrity="sha384-..." crossorigin="anonymous"
+        onload="renderMathInElement(
+           document.getElementById('calculationsContent'),
+           {delimiters: [{left:'$', right:'$', display:false}]}
+        );">
+</script>
+
 </head>
 <body class="bg-background min-h-screen">
     <!-- Header -->
@@ -816,25 +832,38 @@ el.addEventListener('input', () => {
                 const eTotal = { x: e1.x + e2.x, y: e1.y + e2.y };
                 const eTotalMag = Math.sqrt(eTotal.x * eTotal.x + eTotal.y * eTotal.y);
 
-                // Update UI with vector notation (Unicode escapes)
-document.getElementById('r1Vector').textContent    = `r\u20D7\u2081 = (${r1.x.toFixed(2)}, ${r1.y.toFixed(2)}) m`;
-document.getElementById('r2Vector').textContent    = `r\u20D7\u2082 = (${r2.x.toFixed(2)}, ${r2.y.toFixed(2)}) m`;
-document.getElementById('r1Magnitude').textContent = `|r\u20D7\u2081| = ${r1Mag.toFixed(2)} m`;
-document.getElementById('r2Magnitude').textContent = `|r\u20D7\u2082| = ${r2Mag.toFixed(2)} m`;
+                // Update UI con fórmulas KaTeX
+document.getElementById('r1Vector').innerHTML    =
+  `$\\vec{r}_1=( ${r1.x.toFixed(2)},\\; ${r1.y.toFixed(2)} )\\,\\mathrm{m}$`;
+document.getElementById('r2Vector').innerHTML    =
+  `$\\vec{r}_2=( ${r2.x.toFixed(2)},\\; ${r2.y.toFixed(2)} )\\,\\mathrm{m}$`;
+document.getElementById('r1Magnitude').innerHTML =
+  `$|\\vec{r}_1|=${r1Mag.toFixed(2)}\\,\\mathrm{m}$`;
+document.getElementById('r2Magnitude').innerHTML =
+  `$|\\vec{r}_2|=${r2Mag.toFixed(2)}\\,\\mathrm{m}$`;
 
-document.getElementById('u1Vector').textContent    = `û\u2081 = (${u1.x.toFixed(3)}, ${u1.y.toFixed(3)})`;
-document.getElementById('u2Vector').textContent    = `û\u2082 = (${u2.x.toFixed(3)}, ${u2.y.toFixed(3)})`;
+document.getElementById('u1Vector').innerHTML    =
+  `$\\hat{u}_1=( ${u1.x.toFixed(3)},\\; ${u1.y.toFixed(3)} )$`;
+document.getElementById('u2Vector').innerHTML    =
+  `$\\hat{u}_2=( ${u2.x.toFixed(3)},\\; ${u2.y.toFixed(3)} )$`;
 
-document.getElementById('e1Magnitude').textContent = `|E\u20D7\u2081| = ${e1Mag.toExponential(2)} N/C`;
-document.getElementById('e2Magnitude').textContent = `|E\u20D7\u2082| = ${e2Mag.toExponential(2)} N/C`;
-document.getElementById('e1Vector').textContent    = `E\u20D7\u2081 = (${e1.x.toExponential(2)}, ${e1.y.toExponential(2)}) N/C`;
-document.getElementById('e2Vector').textContent    = `E\u20D7\u2082 = (${e2.x.toExponential(2)}, ${e2.y.toExponential(2)}) N/C`;
+document.getElementById('e1Magnitude').innerHTML =
+  `$|\\vec{E}_1|=${e1Mag.toExponential(2)}\\,\\mathrm{N/C}$`;
+document.getElementById('e2Magnitude').innerHTML =
+  `$|\\vec{E}_2|=${e2Mag.toExponential(2)}\\,\\mathrm{N/C}$`;
+document.getElementById('e1Vector').innerHTML    =
+  `$\\vec{E}_1=( ${e1.x.toExponential(2)},\\; ${e1.y.toExponential(2)} )\\,\\mathrm{N/C}$`;
+document.getElementById('e2Vector').innerHTML    =
+  `$\\vec{E}_2=( ${e2.x.toExponential(2)},\\; ${e2.y.toExponential(2)} )\\,\\mathrm{N/C}$`;
 
-document.getElementById('eTotalVector').textContent    = `E\u20D7_total = (${eTotal.x.toExponential(2)}, ${eTotal.y.toExponential(2)}) N/C`;
-document.getElementById('eTotalMagnitude').textContent = `|E\u20D7_total| = ${eTotalMag.toExponential(2)} N/C`;
+document.getElementById('eTotalVector').innerHTML    =
+  `$\\vec{E}_{\\mathrm{total}}=( ${eTotal.x.toExponential(2)},\\; ${eTotal.y.toExponential(2)} )\\,\\mathrm{N/C}$`;
+document.getElementById('eTotalMagnitude').innerHTML =
+  `$|\\vec{E}_{\\mathrm{total}}|=${eTotalMag.toExponential(2)}\\,\\mathrm{N/C}$`;
 
-// Update vectors on SVG
+// Ahora sí, volvemos a dibujar los vectores en el SVG
 this.updateVectorVisuals(e1, e2, eTotal);
+
 
             }
 
