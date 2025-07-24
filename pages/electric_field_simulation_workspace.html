@@ -538,6 +538,12 @@ el.addEventListener('input', () => {
 
                 // Enhanced calculations toggle
                 document.getElementById('toggleCalculations').addEventListener('click', () => this.toggleCalculations());
+              // Logarithmic mapping: pequeñas magnitudes apenas disminuyen, grandes crecen lentamente
+              mapLogLen(value) {
+              // evita log(0): usamos log1p, y conservamos el signo
+              return Math.sign(value) * Math.log1p(Math.abs(value));
+              }
+
             }
 
             handleGridClick(e) {
@@ -865,26 +871,37 @@ el.addEventListener('input', () => {
 
 // Finalmente, redibuja los vectores en el SVG
 this.updateVectorVisuals(e1, e2, eTotal);
-
-
-
             }
 
             updateVectorVisuals(e1, e2, eTotal) {
-    const g = document.getElementById('vectors');
+    const g  = document.getElementById('vectors');
     g.innerHTML = '';
 
+    // Coordenadas pantalla del punto de testeo
     const sx = this.centerX + this.testPoint.x * this.scale;
     const sy = this.centerY - this.testPoint.y * this.scale;
-    const k  = 50 / this.zoomLevel; // factor visual
 
-    // Naranja para E1 y E2 (independiente de polaridad)
-    this.drawVector(g, sx, sy, e1.x * k, -e1.y * k, '#F97316', 'arrowhead-orange', 2, 'E₁');
-    this.drawVector(g, sx, sy, e2.x * k, -e2.y * k, '#F97316', 'arrowhead-orange', 2, 'E₂');
+    // Factor base para longitud visual de flechas
+    const baseFactor = 50;
 
-    // Verde para el total
-    this.drawVector(g, sx, sy, eTotal.x * k, -eTotal.y * k, '#16A34A', 'arrowhead-green-total', 3, 'E_total');
+    // Convertimos cada componente con escala logarítmica
+    const dx1 = this.mapLogLen(e1.x) * baseFactor;
+    const dy1 = -this.mapLogLen(e1.y) * baseFactor;
+
+    const dx2 = this.mapLogLen(e2.x) * baseFactor;
+    const dy2 = -this.mapLogLen(e2.y) * baseFactor;
+
+    const dxT = this.mapLogLen(eTotal.x) * baseFactor;
+    const dyT = -this.mapLogLen(eTotal.y) * baseFactor;
+
+    // Dibujamos E₁ y E₂ en naranja con subíndice "₁" y "₂"
+    this.drawVector(g, sx, sy, dx1, dy1, '#F97316', 'arrowhead-orange',     2, 'E₁');
+    this.drawVector(g, sx, sy, dx2, dy2, '#F97316', 'arrowhead-orange',     2, 'E₂');
+
+    // Dibujamos Eₜ en verde con subíndice "ₜ" (t de total)
+    this.drawVector(g, sx, sy, dxT, dyT, '#16A34A', 'arrowhead-green-total', 3, 'Eₜ');
 }
+
 
 drawVector(group, x0, y0, dx, dy, color, markerId, strokeWidth = 2, label = '') {
     const len = Math.sqrt(dx*dx + dy*dy);
