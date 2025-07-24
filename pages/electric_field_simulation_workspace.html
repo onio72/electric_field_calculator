@@ -830,8 +830,8 @@ document.getElementById('e2Magnitude').textContent = `|E\u20D7\u2082| = ${e2Mag.
 document.getElementById('e1Vector').textContent    = `E\u20D7\u2081 = (${e1.x.toExponential(2)}, ${e1.y.toExponential(2)}) N/C`;
 document.getElementById('e2Vector').textContent    = `E\u20D7\u2082 = (${e2.x.toExponential(2)}, ${e2.y.toExponential(2)}) N/C`;
 
-document.getElementById('eTotalVector').textContent    = `E\u20D7\u209C\u2092\u209C\u2090\u2097 = (${eTotal.x.toExponential(2)}, ${eTotal.y.toExponential(2)}) N/C`;
-document.getElementById('eTotalMagnitude').textContent = `|E\u20D7\u209C\u2092\u209C\u2090\u2097| = ${eTotalMag.toExponential(2)} N/C`;
+document.getElementById('eTotalVector').textContent    = `E\u20D7_total = (${eTotal.x.toExponential(2)}, ${eTotal.y.toExponential(2)}) N/C`;
+document.getElementById('eTotalMagnitude').textContent = `|E\u20D7_total| = ${eTotalMag.toExponential(2)} N/C`;
 
 // Update vectors on SVG
 this.updateVectorVisuals(e1, e2, eTotal);
