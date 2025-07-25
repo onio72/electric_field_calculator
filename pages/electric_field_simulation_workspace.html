@@ -639,19 +639,26 @@ el.addEventListener('input', () => {
             }
 
             updateZoom() {
-                const cx = this.centerX;
-                const cy = this.centerY;
-                const z  = this.zoomLevel;
+    const bbox = this.svg.viewBox.baseVal;
+    const cx = bbox.width / 2;
+    const cy = bbox.height / 2;
 
-                // Escalado alrededor del centro: T(cx,cy) · S(z) · T(-cx,-cy)
-                this.zoomGroup.setAttribute('transform', `translate(${cx} ${cy}) scale(${z}) translate(${-cx} ${-cy})`);
+    const z = this.zoomLevel;
 
-                document.getElementById('zoomLevel').textContent = `${Math.round(z * 100)}%`;
+    // Escalado centrado en el centro visual del SVG
+    const translateX = cx * (1 - z);
+    const translateY = cy * (1 - z);
 
-                // Mostrar/ocultar cuadrícula fina
-                const fineGrid = this.svg.querySelector('rect[fill="url(#gridFine)"]');
-                if (fineGrid) fineGrid.setAttribute('opacity', z > 1.5 ? '1' : '0');
-            }
+    this.zoomGroup.setAttribute('transform', `translate(${translateX}, ${translateY}) scale(${z})`);
+
+    // Actualizar porcentaje de zoom visible
+    document.getElementById('zoomLevel').textContent = `${Math.round(z * 100)}%`;
+
+    // Mostrar/ocultar cuadrícula fina según nivel de zoom
+    const fineGrid = this.svg.querySelector('rect[fill="url(#gridFine)"]');
+    if (fineGrid) fineGrid.setAttribute('opacity', z > 1.5 ? '1' : '0');
+}
+
 
             resetZoom() {
                 this.zoomLevel = 1;
