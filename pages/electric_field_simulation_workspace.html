@@ -202,7 +202,7 @@
                     <div class="grid grid-cols-2 gap-2">
                         <div>
                             <label class="block text-sm font-medium text-text-secondary mb-1">Valor</label>
-                             <input type="number" id="q1Value" class="input-field text-sm" placeholder="5.0" value="5.0" step="0.1" min="0" />
+                             <input type="number" id="q1Value" class="input-field text-sm" placeholder="5.0" value="5.0" step="0.1" min="0.1" />
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-text-secondary mb-1">Unidades</label>
@@ -255,7 +255,7 @@
                     <div class="grid grid-cols-2 gap-2">
                         <div>
                             <label class="block text-sm font-medium text-text-secondary mb-1">Valor</label>
-                            <input type="number" id="q2Value" class="input-field text-sm" placeholder="3.0" value="3.0" step="0.1" min="0" />
+                            <input type="number" id="q2Value" class="input-field text-sm" placeholder="3.0" value="3.0" step="0.1" min="0.1" />
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-text-secondary mb-1">Unidades</label>
@@ -393,6 +393,8 @@
                                 <div><span id="e2Magnitude">No calculado</span></div>
                                 <div class="pt-2 border-t border-secondary-200"><span id="e1Vector">No calculado</span></div>
                                 <div><span id="e2Vector">No calculado</span></div>
+                                  <div><span id="eTotalAngle">No calculado</span></div>
+
                             </div>
                         </div>
 
@@ -863,23 +865,41 @@ el.addEventListener('input', () => {
                 const eTotalMag = Math.sqrt(eTotal.x * eTotal.x + eTotal.y * eTotal.y);
 
                 // Update UI con fórmulas KaTeX (con escapes JS correctos)
+
+              // Modificación para mejorar el aspecto de la notación científica
+              function formatLatexScientific(value, digits = 2) {
+    if (value === 0) return `${value.toFixed(digits)}`;
+
+    const exponent = Math.floor(Math.log10(Math.abs(value)));
+    const mantissa = (value / Math.pow(10, exponent)).toFixed(digits);
+
+    if (exponent === 0) {
+        return `${mantissa}`;
+    }
+
+    return `${mantissa}\\cdot 10^{${exponent}}`;
+}
+
+              
 // Update UI con KaTeX renderizado en caliente
-    renderTex('r1Vector',    `\\vec{r}_1=( ${r1.x.toFixed(2)},\\; ${r1.y.toFixed(2)} )\\,\\mathrm{m}`);
-    renderTex('r2Vector',    `\\vec{r}_2=( ${r2.x.toFixed(2)},\\; ${r2.y.toFixed(2)} )\\,\\mathrm{m}`);
-    renderTex('r1Magnitude', `|\\vec{r}_1|=${r1Mag.toFixed(2)}\\,\\mathrm{m}`);
-    renderTex('r2Magnitude', `|\\vec{r}_2|=${r2Mag.toFixed(2)}\\,\\mathrm{m}`);
+    renderTex('r1Vector', `\\vec{r}_1=( ${r1.x.toFixed(2)},\\; ${r1.y.toFixed(2)} )\\,\\mathrm{m}`);
+renderTex('r2Vector', `\\vec{r}_2=( ${r2.x.toFixed(2)},\\; ${r2.y.toFixed(2)} )\\,\\mathrm{m}`);
+renderTex('r1Magnitude', `|\\vec{r}_1|=${r1Mag.toFixed(2)}\\,\\mathrm{m}`);
+renderTex('r2Magnitude', `|\\vec{r}_2|=${r2Mag.toFixed(2)}\\,\\mathrm{m}`);
 
-    renderTex('u1Vector',    `\\hat{u}_1=( ${u1.x.toFixed(3)},\\; ${u1.y.toFixed(3)} )`);
-    renderTex('u2Vector',    `\\hat{u}_2=( ${u2.x.toFixed(3)},\\; ${u2.y.toFixed(3)} )`);
+renderTex('u1Vector', `\\hat{u}_1=( ${u1.x.toFixed(3)},\\; ${u1.y.toFixed(3)} )`);
+renderTex('u2Vector', `\\hat{u}_2=( ${u2.x.toFixed(3)},\\; ${u2.y.toFixed(3)} )`);
 
-    renderTex('e1Magnitude', `|\\vec{E}_1|=${e1Mag.toExponential(2)}\\,\\mathrm{N/C}`);
-    renderTex('e2Magnitude', `|\\vec{E}_2|=${e2Mag.toExponential(2)}\\,\\mathrm{N/C}`);
-    renderTex('e1Vector',    `\\vec{E}_1=( ${e1.x.toExponential(2)},\\; ${e1.y.toExponential(2)} )\\,\\mathrm{N/C}`);
-    renderTex('e2Vector', `\\vec{E}_2=( ${e2.x.toExponential(2)},\\; ${e2.y.toExponential(2)} )\\,\\mathrm{N/C}`);
+renderTex('e1Magnitude', `|\\vec{E}_1|=${formatLatexScientific(e1Mag)}\\,\\mathrm{N/C}`);
+renderTex('e2Magnitude', `|\\vec{E}_2|=${formatLatexScientific(e2Mag)}\\,\\mathrm{N/C}`);
+renderTex('e1Vector', `\\vec{E}_1=( ${formatLatexScientific(e1.x)},\\; ${formatLatexScientific(e1.y)} )\\,\\mathrm{N/C}`);
+renderTex('e2Vector', `\\vec{E}_2=( ${formatLatexScientific(e2.x)},\\; ${formatLatexScientific(e2.y)} )\\,\\mathrm{N/C}`);
 
+renderTex('eTotalVector', `\\vec{E}_{\\mathrm{total}}=( ${formatLatexScientific(eTotal.x)},\\; ${formatLatexScientific(eTotal.y)} )\\,\\mathrm{N/C}`);
+renderTex('eTotalMagnitude', `|\\vec{E}_{\\mathrm{total}}|=${formatLatexScientific(eTotalMag)}\\,\\mathrm{N/C}`);
+const angleDeg = Math.atan2(eTotal.y, eTotal.x) * (180 / Math.PI);
+renderTex('eTotalAngle', `\\theta = ${angleDeg.toFixed(1)}^\\circ`);
 
-    renderTex('eTotalVector',    `\\vec{E}_{\\mathrm{total}}=( ${eTotal.x.toExponential(2)},\\; ${eTotal.y.toExponential(2)} )\\,\\mathrm{N/C}`);
-    renderTex('eTotalMagnitude', `|\\vec{E}_{\\mathrm{total}}|=${eTotalMag.toExponential(2)}\\,\\mathrm{N/C}`);
 
 
 // Finalmente, redibuja los vectores en el SVG
@@ -904,23 +924,31 @@ this.updateVectorVisuals(e1, e2, eTotal);
     // Verde para el total
     this.drawVector(g, sx, sy, eTotal.x * k, -eTotal.y * k, '#16A34A', 'arrowhead-green-total', 3, 'Et');
 }
-
+//Se actualiza para que dibuje bien los vectores
 drawVector(group, x0, y0, dx, dy, color, markerId, strokeWidth = 2, label = '') {
-    const len = Math.sqrt(dx*dx + dy*dy);
+    const len = Math.sqrt(dx * dx + dy * dy);
     if (len < 5) return;
 
     const NS = 'http://www.w3.org/2000/svg';
+    const arrowOffset = 10; // espacio reservado para la punta de flecha
 
+    // Calcula punto final acortado
+    const scale = (len - arrowOffset) / len;
+    const x1 = x0 + dx * scale;
+    const y1 = y0 + dy * scale;
+
+    // Dibuja línea acortada
     const line = document.createElementNS(NS, 'line');
     line.setAttribute('x1', x0);
     line.setAttribute('y1', y0);
-    line.setAttribute('x2', x0 + dx);
-    line.setAttribute('y2', y0 + dy);
+    line.setAttribute('x2', x1);
+    line.setAttribute('y2', y1);
     line.setAttribute('stroke', color);
     line.setAttribute('stroke-width', strokeWidth);
     line.setAttribute('marker-end', `url(#${markerId})`);
     group.appendChild(line);
 
+    // Etiqueta (si hay)
     if (label) {
         const tx = x0 + dx * 0.6;
         const ty = y0 + dy * 0.6;
@@ -935,6 +963,7 @@ drawVector(group, x0, y0, dx, dy, color, markerId, strokeWidth = 2, label = '') 
         group.appendChild(text);
     }
 }
+
 
 
            getChargeValue(chargeId) {
@@ -1012,6 +1041,7 @@ drawVector(group, x0, y0, dx, dy, color, markerId, strokeWidth = 2, label = '') 
         document.addEventListener('DOMContentLoaded', () => {
             new ElectricFieldCalculator();
         });
+      
       //Para mostrar el valor de las cargas completo con unidad y signo
       // Función para actualizar el texto debajo de la carga
       // Función específica para actualizar Q1
@@ -1059,6 +1089,27 @@ document.getElementById('q2Polarity').addEventListener('change', updateQ2Display
 
 // Inicializar al cargar la página para Q2
 document.addEventListener('DOMContentLoaded', updateQ2Display);
+// Validar valor de carga Q1
+document.getElementById('q1Value').addEventListener('input', (e) => {
+    const value = parseFloat(e.target.value);
+    if (value <= 0) {
+        e.target.setCustomValidity("El valor de la carga no puede ser cero.");
+        e.target.reportValidity(); // muestra el mensaje
+    } else {
+        e.target.setCustomValidity("");
+    }
+});
+
+// Validar valor de carga Q2
+      document.getElementById('q2Value').addEventListener('input', (e) => {
+    const value = parseFloat(e.target.value);
+    if (value <= 0) {
+        e.target.setCustomValidity("El valor de la carga no puede ser cero.");
+        e.target.reportValidity();
+    } else {
+        e.target.setCustomValidity("");
+    }
+});
 
     </script>
     <!-- Eliminado: script propio de Rocket (no existe en GitHub Pages) -->
