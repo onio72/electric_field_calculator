@@ -115,6 +115,13 @@
   <marker id="arrowhead-green-total" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto">
     <polygon points="0 0, 6 2.5, 0 5" fill="#16A34A"/>
   </marker>
+         <!-- Mejora los vectores -->                      
+  <marker id="arrowhead-default" viewBox="0 0 10 10" refX="10" refY="5"
+          markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/>
+  </marker>
+
+
                             </defs>
                             
                             <!-- Zoomable and Pannable Group -->
@@ -919,53 +926,46 @@ this.updateVectorVisuals(e1, e2, eTotal);
     const k  = 50 / this.zoomLevel; // factor visual
 
     // Naranja para E1 y E2 (independiente de polaridad)
-    this.drawVector(g, sx, sy, e1.x * k, -e1.y * k, '#F97316', 'arrowhead-orange', 2, 'E₁');
-    this.drawVector(g, sx, sy, e2.x * k, -e2.y * k, '#F97316', 'arrowhead-orange', 2, 'E₂');
+    this.drawVector(g, sx, sy, e1.x * k, -e1.y * k, '#F97316', 'E₁', this.zoomLevel);
+    this.drawVector(g, sx, sy, e2.x * k, -e2.y * k, '#F97316', 'E₂', this.zoomLevel);
 
     // Verde para el total
-    this.drawVector(g, sx, sy, eTotal.x * k, -eTotal.y * k, '#16A34A', 'arrowhead-green-total', 3, 'Et');
+    this.drawVector(g, sx, sy, eTotal.x * k, -eTotal.y * k, '#16A34A', 'Et', this.zoomLevel);
 }
 //Se actualiza para que dibuje bien los vectores
-drawVector(group, x0, y0, dx, dy, color, markerId, strokeWidth = 2, label = '') {
-    const len = Math.sqrt(dx * dx + dy * dy);
-    if (len < 5) return;
-
+drawVector(group, x0, y0, dx, dy, color = '#333', label = '', zoomLevel = 1) {
     const NS = 'http://www.w3.org/2000/svg';
-    const arrowOffset = 10; // espacio reservado para la punta de flecha
+    const len = Math.sqrt(dx * dx + dy * dy);
+    if (len < 2) return;
 
-    // Calcula punto final acortado
-    const scale = (len - arrowOffset) / len;
-    const x1 = x0 + dx * scale;
-    const y1 = y0 + dy * scale;
-
-    // Dibuja línea acortada
+    // Línea completa con marcador automático
     const line = document.createElementNS(NS, 'line');
     line.setAttribute('x1', x0);
     line.setAttribute('y1', y0);
-    line.setAttribute('x2', x1);
-    line.setAttribute('y2', y1);
+    line.setAttribute('x2', x0 + dx);
+    line.setAttribute('y2', y0 + dy);
     line.setAttribute('stroke', color);
-    line.setAttribute('stroke-width', strokeWidth);
-    line.setAttribute('marker-end', `url(#${markerId})`);
+    line.setAttribute('stroke-width', 2);
+    line.setAttribute('stroke-linecap', 'round');
+    line.setAttribute('marker-end', 'url(#arrowhead-default)');
+    line.style.color = color; // para que currentColor funcione en el marker
     group.appendChild(line);
 
-    // Etiqueta (si hay)
+    // Etiqueta opcional
     if (label) {
         const tx = x0 + dx * 0.6;
         const ty = y0 + dy * 0.6;
         const text = document.createElementNS(NS, 'text');
         text.setAttribute('x', tx);
-        text.setAttribute('y', ty - 4);
+        text.setAttribute('y', ty - 6 / zoomLevel);
         text.setAttribute('fill', color);
-        text.setAttribute('font-size', '12');
+        text.setAttribute('font-size', `${12 / zoomLevel}`);
         text.setAttribute('font-weight', 'bold');
         text.setAttribute('text-anchor', 'middle');
         text.textContent = label;
         group.appendChild(text);
     }
 }
-
-
 
            getChargeValue(chargeId) {
     // El usuario introduce el valor absoluto
