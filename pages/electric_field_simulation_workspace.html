@@ -916,29 +916,26 @@ this.updateVectorVisuals(e1, e2, eTotal);
 //Se actualiza para que dibuje bien los vectores
 drawVector(group, x0, y0, dx, dy, color = '#333', label = '', zoomLevel = 1) {
     const NS = 'http://www.w3.org/2000/svg';
-    line.setAttribute('x2', x1);
+    const len = Math.sqrt(dx * dx + dy * dy);
     if (len < 2) return;
-  //Añadido para que la línea no sobresalga sobre la flecha
-  const arrowOffset = 10; // espacio reservado para la punta
-const scale = (len - arrowOffset) / len;
-const x1 = x0 + dx * scale;
-const y1 = y0 + dy * scale;
 
-    // Línea completa con marcador automático
+    const arrowOffset = 10;
+    const scale = (len - arrowOffset) / len;
+    const x1 = x0 + dx * scale;
+    const y1 = y0 + dy * scale;
+
     const line = document.createElementNS(NS, 'line');
     line.setAttribute('x1', x0);
     line.setAttribute('y1', y0);
     line.setAttribute('x2', x1);
-   line.setAttribute('y2', y1);
+    line.setAttribute('y2', y1);
     line.setAttribute('stroke', color);
     line.setAttribute('stroke-width', 2);
     line.setAttribute('stroke-linecap', 'round');
-    line.setAttribute('marker-end', 'url(#arrowhead-default)');
-    line.style.color = color; // para que currentColor funcione en el marker
+    line.style.color = color; // IMPORTANTE para que el marcador herede el color
     line.setAttribute('marker-end', 'url(#arrowhead-default)');
     group.appendChild(line);
 
-    // Etiqueta opcional
     if (label) {
         const tx = x0 + dx * 0.6;
         const ty = y0 + dy * 0.6;
@@ -953,6 +950,7 @@ const y1 = y0 + dy * scale;
         group.appendChild(text);
     }
 }
+
 
            getChargeValue(chargeId) {
     // El usuario introduce el valor absoluto
