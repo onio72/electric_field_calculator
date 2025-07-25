@@ -486,6 +486,7 @@
                 this.showInstructions();
                 // Aplicar el zoom inicial centrado
                 this.updateZoom();
+                updateQ1Display();
             }
 
             initializeEventListeners() {
@@ -634,7 +635,6 @@ el.addEventListener('input', () => {
                 if (newZoom !== this.zoomLevel) {
                     this.zoomLevel = newZoom;
                     this.updateZoom();
-                  updateQ1Display()
                 }
             }
 
@@ -656,6 +656,7 @@ el.addEventListener('input', () => {
             resetZoom() {
                 this.zoomLevel = 1;
                 this.updateZoom();
+            
             }
 
             getCoordinatesFromEvent(e) {
