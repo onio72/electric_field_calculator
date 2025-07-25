@@ -230,6 +230,9 @@
                     <div class="text-xs text-secondary-600">
                         <span id="q1Position">Posición: No colocada</span>
                     </div>
+                  <div class="text-xs text-secondary-600 mt-1">
+    <span id="q1DisplayValue">Carga: No definida</span>
+</div>
                 </div>
             </div>
 
@@ -280,6 +283,9 @@
                     <div class="text-xs text-secondary-600">
                         <span id="q2Position">Posición: No colocada</span>
                     </div>
+                  <div class="text-xs text-secondary-600 mt-1">
+    <span id="q2DisplayValue">Carga: No definida</span>
+</div>
                 </div>
             </div>
 
@@ -994,6 +1000,54 @@ drawVector(group, x0, y0, dx, dy, color, markerId, strokeWidth = 2, label = '') 
         document.addEventListener('DOMContentLoaded', () => {
             new ElectricFieldCalculator();
         });
+      //Para mostrar el valor de las cargas completo con unidad y signo
+      // Función para actualizar el texto debajo de la carga
+      // Función específica para actualizar Q1
+function updateQ1Display() {
+    const valueInput = document.getElementById('q1Value');
+    const unitsSelect = document.getElementById('q1Units');
+    const polaritySelect = document.getElementById('q1Polarity');
+
+    // Leer valores actuales
+    let value = parseFloat(valueInput.value).toFixed(2);
+    const unit = unitsSelect.value;
+    const polarity = polaritySelect.value === 'positive' ? '+' : '−';
+
+    // Mostrar texto formateado en pantalla
+    const displayElement = document.getElementById('q1DisplayValue');
+    displayElement.textContent = `Carga: ${polarity}${value} ${unit}`;
+}
+
+// Llamar automáticamente la función cada vez que se modifique algo
+document.getElementById('q1Value').addEventListener('input', updateQ1Display);
+document.getElementById('q1Units').addEventListener('change', updateQ1Display);
+document.getElementById('q1Polarity').addEventListener('change', updateQ1Display);
+
+// Ejecutar al cargar la página
+document.addEventListener('DOMContentLoaded', updateQ2Display);
+      
+// Función específica para actualizar Q2
+function updateQ2Display() {
+    const valueInput = document.getElementById('q2Value');
+    const unitsSelect = document.getElementById('q2Units');
+    const polaritySelect = document.getElementById('q2Polarity');
+
+    let value = parseFloat(valueInput.value).toFixed(2);
+    const unit = unitsSelect.value;
+    const polarity = polaritySelect.value === 'positive' ? '+' : '−';
+
+    const displayElement = document.getElementById('q2DisplayValue');
+    displayElement.textContent = `Carga: ${polarity}${value} ${unit}`;
+}
+
+// Eventos para la interacción en tiempo real para Q2
+document.getElementById('q2Value').addEventListener('input', updateQ2Display);
+document.getElementById('q2Units').addEventListener('change', updateQ2Display);
+document.getElementById('q2Polarity').addEventListener('change', updateQ2Display);
+
+// Inicializar al cargar la página para Q2
+document.addEventListener('DOMContentLoaded', updateQ2Display);
+
     </script>
     <!-- Eliminado: script propio de Rocket (no existe en GitHub Pages) -->
 </body>
