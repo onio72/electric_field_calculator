@@ -90,16 +90,16 @@
          patternTransform="translate(0,2)">
     <path d="M 6 0 L 0 0 0 6" fill="none" stroke="#E5E7EB" stroke-width="0.5"/>
 </pattern>
-
-  <marker id="arrowhead-default"
+<marker id="arrowhead-default"
         viewBox="0 0 10 10"
-        refX="8" refY="5"
-        markerWidth="6" 
+        refX="9" refY="5"
+        markerWidth="6"
         markerHeight="6"
         orient="auto"
         markerUnits="userSpaceOnUse">
   <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
 </marker>
+  
                             </defs>
                             
                             <!-- Zoomable and Pannable Group -->
@@ -935,6 +935,7 @@ drawVector(group, x0, y0, dx, dy, color = '#333', label = '', zoomLevel = 1) {
     line.setAttribute('stroke-width', 2);
     line.setAttribute('stroke-linecap', 'round');
     line.style.color = color; // IMPORTANTE para que el marcador herede el color
+  line.setAttribute('color', color); // redundante pero útil en Safari/Firefox
     line.setAttribute('marker-end', 'url(#arrowhead-default)');
     group.appendChild(line);
 
