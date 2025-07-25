@@ -91,37 +91,13 @@
     <path d="M 6 0 L 0 0 0 6" fill="none" stroke="#E5E7EB" stroke-width="0.5"/>
 </pattern>
 
-                                <!-- Flecha azul -->
-  <marker id="arrowhead" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto">
-    <polygon points="0 0, 6 2.5, 0 5" fill="#2563EB"/>
+  <marker id="arrowhead-default" viewBox="0 0 10 10"
+          refX="10" refY="5"
+          markerWidth="6" markerHeight="6"
+          orient="auto-start-reverse"
+          markerUnits="strokeWidth">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
   </marker>
-
-  <!-- Flecha roja -->
-  <marker id="arrowhead-red" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto">
-    <polygon points="0 0, 6 2.5, 0 5" fill="#DC2626"/>
-  </marker>
-
-  <!-- Flecha verde -->
-  <marker id="arrowhead-green" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto">
-    <polygon points="0 0, 6 2.5, 0 5" fill="#059669"/>
-  </marker>
-
-  <!-- Flecha naranja -->
-  <marker id="arrowhead-orange" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto">
-    <polygon points="0 0, 6 2.5, 0 5" fill="#F97316"/>
-  </marker>
-
-  <!-- Flecha verde total -->
-  <marker id="arrowhead-green-total" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto">
-    <polygon points="0 0, 6 2.5, 0 5" fill="#16A34A"/>
-  </marker>
-         <!-- Mejora los vectores -->                      
-  <marker id="arrowhead-default" viewBox="0 0 10 10" refX="10" refY="5"
-          markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-    <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/>
-  </marker>
-
-
                             </defs>
                             
                             <!-- Zoomable and Pannable Group -->
@@ -778,14 +754,17 @@ el.addEventListener('input', () => {
 
                 const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
                 text.setAttribute('x', svgX);
-                text.setAttribute('y', svgY + 5);
-                text.setAttribute('text-anchor', 'middle');
+                text.setAttribute('y', svgY);
+                text.setAttribute('text-anchor', 'middle');            // Centrado horizontal
+                text.setAttribute('dominant-baseline', 'middle');      // Centrado vertical moderno
+                text.setAttribute('alignment-baseline', 'middle');     // Compatibilidad adicional (opcional)
                 text.setAttribute('fill', '#FFFFFF');
                 text.setAttribute('font-size', 16 / this.zoomLevel);
                 text.setAttribute('font-weight', 'bold');
-                text.textContent = symbol;
                 text.setAttribute('stroke', '#FFFFFF');
                 text.setAttribute('stroke-width', '0.4');
+                text.textContent = symbol;
+
 
                 const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
                 label.setAttribute('x', svgX);
@@ -937,20 +916,26 @@ this.updateVectorVisuals(e1, e2, eTotal);
 //Se actualiza para que dibuje bien los vectores
 drawVector(group, x0, y0, dx, dy, color = '#333', label = '', zoomLevel = 1) {
     const NS = 'http://www.w3.org/2000/svg';
-    const len = Math.sqrt(dx * dx + dy * dy);
+    line.setAttribute('x2', x1);
     if (len < 2) return;
+  //Añadido para que la línea no sobresalga sobre la flecha
+  const arrowOffset = 10; // espacio reservado para la punta
+const scale = (len - arrowOffset) / len;
+const x1 = x0 + dx * scale;
+const y1 = y0 + dy * scale;
 
     // Línea completa con marcador automático
     const line = document.createElementNS(NS, 'line');
     line.setAttribute('x1', x0);
     line.setAttribute('y1', y0);
-    line.setAttribute('x2', x0 + dx);
-    line.setAttribute('y2', y0 + dy);
+    line.setAttribute('x2', x1);
+   line.setAttribute('y2', y1);
     line.setAttribute('stroke', color);
     line.setAttribute('stroke-width', 2);
     line.setAttribute('stroke-linecap', 'round');
     line.setAttribute('marker-end', 'url(#arrowhead-default)');
     line.style.color = color; // para que currentColor funcione en el marker
+    line.setAttribute('marker-end', 'url(#arrowhead-default)');
     group.appendChild(line);
 
     // Etiqueta opcional
