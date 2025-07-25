@@ -958,18 +958,29 @@ drawVector(group, x0, y0, dx, dy, color = '#333', label = '', zoomLevel = 1) {
     group.appendChild(line);
 
     if (label) {
-        const tx = x0 + dx * 0.6;
-        const ty = y0 + dy * 0.6;
-        const text = document.createElementNS(NS, 'text');
-        text.setAttribute('x', tx);
-        text.setAttribute('y', ty - 6 / zoomLevel);
-        text.setAttribute('fill', color);
-        text.setAttribute('font-size', `${12 / zoomLevel}`);
-        text.setAttribute('font-weight', 'bold');
-        text.setAttribute('text-anchor', 'middle');
-        text.textContent = label;
-        group.appendChild(text);
-    }
+    // Calcular la posición base (60% del vector)
+    const baseX = x0 + dx * 0.6;
+    const baseY = y0 + dy * 0.6;
+    
+    // Calcular vector perpendicular para desplazar la etiqueta
+    const perpX = -dy / len; // Vector perpendicular normalizado
+    const perpY = dx / len;
+    
+    // Desplazar la etiqueta hacia arriba y hacia afuera del vector
+    const offsetDistance = 15 / zoomLevel; // Distancia de separación
+    const tx = baseX + perpX * offsetDistance;
+    const ty = baseY + perpY * offsetDistance - 3 / zoomLevel;
+    
+    const text = document.createElementNS(NS, 'text');
+    text.setAttribute('x', tx);
+    text.setAttribute('y', ty);
+    text.setAttribute('fill', color);
+    text.setAttribute('font-size', `${12 / zoomLevel}`);
+    text.setAttribute('font-weight', 'bold');
+    text.setAttribute('text-anchor', 'middle');
+    text.textContent = label;
+    group.appendChild(text);
+}
 }
 
 
