@@ -351,33 +351,35 @@
                 </div>
                 
                 <div id="calculationsContent" class="overflow-y-auto">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <!-- Position Vectors -->
-                        <div class="bg-secondary-50 rounded-lg p-4">
-                            <h3 class="text-sm font-semibold text-text-primary mb-3 flex items-center">
-                                <i class="fas fa-vector-square text-primary mr-2"></i>
-                                Vectores de Posición
-                            </h3>
-                            <div class="space-y-2 text-sm font-mono">
-                                <div><span id="r1Vector">No calculado</span></div>
-                                <div><span id="r2Vector">No calculado</span></div>
-                                <div class="pt-2 border-t border-secondary-200"><span id="r1Magnitude">No calculado</span></div>
-                                <div><span id="r2Magnitude">No calculado</span></div>
-                            </div>
-                        </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Position + Unit Vectors -->
+<div class="bg-secondary-50 rounded-lg p-4 space-y-6">
+    <!-- Vectores de Posición -->
+    <div>
+        <h3 class="text-sm font-semibold text-text-primary mb-3 flex items-center">
+            <i class="fas fa-vector-square text-primary mr-2"></i>
+            Vectores de Posición
+        </h3>
+        <div class="space-y-2 text-sm font-mono">
+            <div><span id="r1Vector">No calculado</span></div>
+            <div><span id="r2Vector">No calculado</span></div>
+            <div class="pt-2 border-t border-secondary-200"><span id="r1Magnitude">No calculado</span></div>
+            <div><span id="r2Magnitude">No calculado</span></div>
+        </div>
+    </div>
 
-                        <!-- Unit Vectors -->
-                        <div class="bg-secondary-50 rounded-lg p-4">
-                            <h3 class="text-sm font-semibold text-text-primary mb-3 flex items-center">
-                                <i class="fas fa-compass text-success mr-2"></i>
-                                Vectores Unitarios
-                            </h3>
-                            <div class="space-y-2 text-sm font-mono">
-                                <div><span id="u1Vector">No calculado</span></div>
-                                <div><span id="u2Vector">No calculado</span></div>
-
-                            </div>
-                        </div>
+    <!-- Vectores Unitarios -->
+    <div>
+        <h3 class="text-sm font-semibold text-text-primary mb-3 flex items-center">
+            <i class="fas fa-compass text-success mr-2"></i>
+            Vectores Unitarios
+        </h3>
+        <div class="space-y-2 text-sm font-mono">
+            <div><span id="u1Vector">No calculado</span></div>
+            <div><span id="u2Vector">No calculado</span></div>
+        </div>
+    </div>
+</div>
 
                         <!-- Electric Fields -->
                         <div class="bg-secondary-50 rounded-lg p-4">
