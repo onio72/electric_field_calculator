@@ -352,35 +352,35 @@
                 
                 <div id="calculationsContent" class="overflow-y-auto">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <!-- Position + Unit Vectors -->
+                        <!-- Columna combinada: posición + unitarios -->
 <div class="bg-secondary-50 rounded-lg p-4 space-y-6">
-    <!-- Vectores de Posición -->
-    <div>
-        <h3 class="text-sm font-semibold text-text-primary mb-3 flex items-center">
-            <i class="fas fa-vector-square text-primary mr-2"></i>
-            Vectores de Posición
-        </h3>
-        <div class="space-y-2 text-sm font-mono">
-            <div><span id="r1Vector">No calculado</span></div>
-            <div><span id="r2Vector">No calculado</span></div>
-            <div class="pt-2 border-t border-secondary-200"><span id="r1Magnitude">No calculado</span></div>
-            <div><span id="r2Magnitude">No calculado</span></div>
-        </div>
+  <!-- Vectores de Posición -->
+  <div>
+    <h3 class="text-sm font-semibold text-text-primary mb-3 flex items-center">
+      <i class="fas fa-vector-square text-blue-600 mr-2"></i>
+      Vectores de Posición
+    </h3>
+    <div class="space-y-2 text-sm font-mono">
+      <div><span id="r1Vector">No calculado</span></div>
+      <div><span id="r2Vector">No calculado</span></div>
+      <div class="pt-2 border-t border-secondary-200"><span id="r1Magnitude">No calculado</span></div>
+      <div><span id="r2Magnitude">No calculado</span></div>
     </div>
-<!-- Salto de línea visual -->
-<hr class="border-t border-secondary-300 my-4" />
-    <!-- Vectores Unitarios -->
-    <div>
-        <h3 class="text-sm font-semibold text-text-primary mb-3 flex items-center">
-            <i class="fas fa-compass text-success mr-2"></i>
-            Vectores Unitarios
-        </h3>
-        <div class="space-y-2 text-sm font-mono">
-            <div><span id="u1Vector">No calculado</span></div>
-            <div><span id="u2Vector">No calculado</span></div>
-        </div>
+  </div>
+
+  <!-- Vectores Unitarios -->
+  <div>
+    <h3 class="text-sm font-semibold text-text-primary mb-3 flex items-center">
+      <i class="fas fa-compass text-green-600 mr-2"></i>
+      Vectores Unitarios
+    </h3>
+    <div class="space-y-2 text-sm font-mono">
+      <div><span id="u1Vector">No calculado</span></div>
+      <div><span id="u2Vector">No calculado</span></div>
     </div>
+  </div>
 </div>
+
 
                         <!-- Electric Fields -->
                         <div class="bg-secondary-50 rounded-lg p-4">
@@ -409,14 +409,15 @@
                               <div><span id="eTotalAngle">No calculado</span></div>
                             </div>
                             <div class="mt-3 space-y-1 text-xs text-secondary-600">
-  <div class="flex items-center">
-    <div class="w-3 h-1 bg-orange-500 mr-2"></div>
-    <span>E₁ y E₂ (Naranja)</span>
-  </div>
-  <div class="flex items-center">
-    <div class="w-3 h-1 bg-green-600 mr-2"></div>
-    <span>E<sub>total</sub> (Verde)</span>
-  </div>
+  <div class="flex items-center text-orange-500">
+  <div class="w-3 h-1 bg-orange-500 mr-2"></div>
+  <span>E₁ y E₂ (Naranja)</span>
+</div>
+
+ <div class="flex items-center text-green-600">
+  <div class="w-3 h-1 bg-green-600 mr-2"></div>
+  <span>E<sub>total</sub> (Verde)</span>
+</div>
 </div>
 
                         </div>
@@ -762,7 +763,7 @@ el.addEventListener('input', () => {
                 const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
                 circle.setAttribute('cx', svgX);
                 circle.setAttribute('cy', svgY);
-                circle.setAttribute('r', '12');
+                circle.setAttribute('r', 12 / this.zoomLevel);
                 circle.setAttribute('fill', color);
                 circle.setAttribute('stroke', '#ffffff');
                 circle.setAttribute('stroke-width', '2');
@@ -773,7 +774,7 @@ el.addEventListener('input', () => {
                 text.setAttribute('y', svgY + 5);
                 text.setAttribute('text-anchor', 'middle');
                 text.setAttribute('fill', '#FFFFFF');
-                text.setAttribute('font-size', '16');
+                text.setAttribute('font-size', 16 / this.zoomLevel);
                 text.setAttribute('font-weight', 'bold');
                 text.textContent = symbol;
                 text.setAttribute('stroke', '#FFFFFF');
@@ -784,7 +785,7 @@ el.addEventListener('input', () => {
                 label.setAttribute('y', svgY - 18);
                 label.setAttribute('text-anchor', 'middle');
                 label.setAttribute('fill', color);
-                label.setAttribute('font-size', '12');
+                label.setAttribute('font-size', 12 / this.zoomLevel);
                 label.setAttribute('font-weight', 'bold');
                 label.textContent = chargeId === 'q1' ? 'Q₁' : 'Q₂';
 
@@ -804,7 +805,7 @@ el.addEventListener('input', () => {
                 const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
                 circle.setAttribute('cx', svgX);
                 circle.setAttribute('cy', svgY);
-                circle.setAttribute('r', '6');
+                circle.setAttribute('r', 6 / this.zoomLevel);
                 circle.setAttribute('fill', '#2563EB');
                 circle.setAttribute('stroke', '#ffffff');
                 circle.setAttribute('stroke-width', '2');
@@ -814,7 +815,7 @@ el.addEventListener('input', () => {
                 label.setAttribute('y', svgY - 15);
                 label.setAttribute('text-anchor', 'middle');
                 label.setAttribute('fill', '#2563EB');
-                label.setAttribute('font-size', '10');
+                label.setAttribute('font-size', 10 / this.zoomLevel);
                 label.setAttribute('font-weight', 'bold');
                 label.textContent = 'P';
 
